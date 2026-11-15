@@ -31,6 +31,7 @@ namespace StarterAssets
             characterController.enabled = false;
             animator.enabled = false;
     
+            thirdPersonController.ge
     }
     }
 }
