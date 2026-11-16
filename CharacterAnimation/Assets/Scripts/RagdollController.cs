@@ -1,6 +1,7 @@
 using UnityEditor;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 namespace StarterAssets
@@ -10,12 +11,17 @@ namespace StarterAssets
         //Animator, Capsule collider, and Third person controller to be disabled
         public CharacterController characterController;
         public Animator animator;
-        public Component thirdPersonController;
+        public ThirdPersonController thirdPersonController;
+
+        public bool isRagdol = false;
+
+        private GameObject[] ragdolParts;
         
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
         {
+            ragdolParts = GameObject.FindGameObjectsWithTag("SkeletonRB");
 
         }
 
@@ -25,14 +31,49 @@ namespace StarterAssets
 
         }
 
-        // Turn ragdoll on
-        public void EnnableRagdoll()
+        public void OnRagdol()
         {
+            if (isRagdol)
+            {
+                isRagdol = false;
+                DisableRagdol();
+
+            }
+            else
+            {
+                isRagdol = true;
+                EnableRagdoll();
+            }
+        }
+
+        // Turn ragdoll on
+        public void EnableRagdoll()
+        {
+            thirdPersonController.enabled = false;
             characterController.enabled = false;
             animator.enabled = false;
-    
-            thirdPersonController.ge
-    }
+
+            foreach (GameObject part in ragdolParts)
+            {
+                part.GetComponent<Rigidbody>().isKinematic = false;
+            }
+
+
+        }
+
+        public void DisableRagdol()
+        {
+
+            animator.enabled = true;
+            characterController.enabled = true;
+            thirdPersonController.enabled = true;
+
+            foreach (GameObject part in ragdolParts)
+            {
+                part.GetComponent<Rigidbody>().isKinematic = true;
+            }
+
+        }
     }
 }
 
