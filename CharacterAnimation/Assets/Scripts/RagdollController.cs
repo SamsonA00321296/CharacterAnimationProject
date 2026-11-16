@@ -49,13 +49,19 @@ namespace StarterAssets
         // Turn ragdoll on
         public void EnableRagdoll()
         {
+            Vector3 velocityToApply= characterController.velocity;
+
             thirdPersonController.enabled = false;
             characterController.enabled = false;
             animator.enabled = false;
 
             foreach (GameObject part in ragdolParts)
             {
-                part.GetComponent<Rigidbody>().isKinematic = false;
+                Rigidbody rb = part.GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+
+                rb.linearVelocity = velocityToApply;
+
             }
 
 
