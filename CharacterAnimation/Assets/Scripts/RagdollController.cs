@@ -13,9 +13,11 @@ namespace StarterAssets
         public Animator animator;
         public ThirdPersonController thirdPersonController;
 
-        public bool isRagdol = false;
+        private bool isRagdol = false;
 
         private GameObject[] ragdolParts;
+
+        private GameObject foot;
         
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,12 +25,12 @@ namespace StarterAssets
         {
             ragdolParts = GameObject.FindGameObjectsWithTag("SkeletonRB");
 
+            foot = GameObject.FindGameObjectWithTag("foot");
         }
 
         // Update is called once per frame
         void Update()
         {
-
         }
 
         public void OnRagdol()
@@ -69,15 +71,20 @@ namespace StarterAssets
 
         public void DisableRagdol()
         {
+            gameObject.transform.SetPositionAndRotation(foot.transform.position, transform.rotation);
 
             animator.enabled = true;
             characterController.enabled = true;
             thirdPersonController.enabled = true;
 
+            characterController.SimpleMove(Vector3.zero);
+
             foreach (GameObject part in ragdolParts)
             {
                 part.GetComponent<Rigidbody>().isKinematic = true;
             }
+
+            
 
         }
     }

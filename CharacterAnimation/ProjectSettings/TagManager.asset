@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - SkeletonRB
+  - foot
   layers:
   - Default
   - TransparentFX
