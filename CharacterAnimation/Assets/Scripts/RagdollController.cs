@@ -14,6 +14,7 @@ namespace StarterAssets
         public ThirdPersonController thirdPersonController;
 
         private bool isRagdol = false;
+        private bool canRagdol = true;
 
         private GameObject[] ragdolParts;
 
@@ -33,17 +34,17 @@ namespace StarterAssets
         {
         }
 
-        public void OnRagdol()
+        public void Ragdol()
         {
             if (isRagdol)
             {
-                isRagdol = false;
+                
                 DisableRagdol();
 
             }
-            else
+            else if(!isRagdol && canRagdol)
             {
-                isRagdol = true;
+
                 EnableRagdoll();
             }
         }
@@ -51,10 +52,12 @@ namespace StarterAssets
         // Turn ragdoll on
         public void EnableRagdoll()
         {
+            isRagdol = true;
+            canRagdol = false;
+            
             Vector3 velocityToApply= characterController.velocity;
 
-            thirdPersonController.enabled = false;
-            characterController.enabled = false;
+            DisableMovement();
             animator.enabled = false;
 
             foreach (GameObject part in ragdolParts)
@@ -71,13 +74,18 @@ namespace StarterAssets
 
         public void DisableRagdol()
         {
+            isRagdol = false;
+            //Forcing the animator to play the recovery every time helps
+            animator.Play("Recover");
+
+            animator.SetBool("Trip", false);
+            //animator.SetTrigger("Enter Recover");
             gameObject.transform.SetPositionAndRotation(foot.transform.position, transform.rotation);
 
+            
             animator.enabled = true;
-            characterController.enabled = true;
-            thirdPersonController.enabled = true;
 
-            characterController.SimpleMove(Vector3.zero);
+
 
             foreach (GameObject part in ragdolParts)
             {
@@ -86,6 +94,24 @@ namespace StarterAssets
 
             
 
+        }
+
+        // Called by method that starts ragdoll, and trip to prevent movement
+        public void DisableMovement()
+        {
+            thirdPersonController.enabled = false;
+            characterController.enabled = false;
+        }
+
+        // Called by recover animation so you cannot walk when moving
+        public void EnableMovement()
+        {
+            characterController.enabled = true;
+            thirdPersonController.enabled = true;
+            canRagdol = true;
+
+
+            characterController.SimpleMove(Vector3.zero);
         }
     }
 }

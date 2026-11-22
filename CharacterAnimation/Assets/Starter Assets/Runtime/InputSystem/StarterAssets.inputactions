@@ -55,6 +55,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Trip",
+                    "type": "Button",
+                    "id": "36d49fda-3dd7-469d-9225-406c4514bba9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -242,6 +252,28 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Ragdol",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "321f6efd-b30c-48f5-9277-16857e8cd258",
+                    "path": "<Keyboard>/#(T)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26763e09-8033-496e-919f-8dfc599c90be",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
